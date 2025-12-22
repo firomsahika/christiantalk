@@ -47,7 +47,7 @@ const PostCreationPage = () => {
         
         {/* Header */}
         <View style={styles.header}>
-          <Pressable onPress={() => navigation.goBack()} style={styles.headerButton}>
+          <Pressable onPress={() => router.back()} style={styles.headerButton}>
             <Text style={styles.cancelButtonText}>Cancel</Text>
           </Pressable>
           <Text style={styles.screenTitle}>Create Post</Text>

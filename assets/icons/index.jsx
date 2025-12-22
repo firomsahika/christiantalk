@@ -10,6 +10,7 @@ import SettingsIcon from './Setting'
 import StudyIcon from "./Study"
 import UserIcon from './User'
 import UsersIcon from './Users'
+import LogoutIcon from './LogOut'
 
 const icons = {
     home: HomeIcon,
@@ -22,7 +23,8 @@ const icons = {
     study: StudyIcon,
     setting: SettingsIcon,
     bookOpen:BookIcon,
-    users:UsersIcon
+    users:UsersIcon,
+    logOut:LogoutIcon
 
 }
 
