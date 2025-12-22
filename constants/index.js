@@ -1,0 +1,2 @@
+export const supabaseUrl = "https://fetomvvafrczeyzkjsag.supabase.co";
+export const supabaseAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZldG9tdnZhZnJjemV5emtqc2FnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU5OTM2NTMsImV4cCI6MjA4MTU2OTY1M30.76-TYpPY6WuYiL8gZJTac_-JVDUoKc6wqnJ_R8XU4Ds"
