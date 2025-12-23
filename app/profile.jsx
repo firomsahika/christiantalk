@@ -1,6 +1,7 @@
 import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
+  Alert,
   Image,
   Pressable,
   SafeAreaView,
@@ -12,18 +13,40 @@ import {
 } from 'react-native';
 // import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from "../assets/icons/index";
+import Avatar from "../components/Avatar";
 import Header from '../components/PagesHeader';
 import { theme } from '../constants/theme';
 import { useAuth } from '../contexts/AuthContext';
+import hp from "../helpers/common";
 
 const Profile = () => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('My Posts');
   const {user, setAuth} = useAuth();
 
-  const handleLogout = async() =>{
+  const onLogout = async() =>{
     //handle logout
-    // const {error} = await supabase.auth.AuthStateOnLogout();
+    const {error} = await supabase.auth.signOut();
+    if(error){
+      Alert.alert("Sign out", "Error signing out")
+    }
+    
+  }
+
+  const handleLogout = async()=>{
+    // show confirm modal
+    Alert.alert('Confirm', "Are you sure you want to log our?", [
+      {
+        text: 'Cancel',
+        onPress: ()=> console.log('modal cancelled'),
+        style: 'cancel'
+      },
+      {
+        text: "logout",
+        onPress:()=> onLogout(),
+        style:'destructive'
+      }
+    ])
   }
 
   // Dummy data
@@ -50,7 +73,7 @@ const Profile = () => {
     if (items.length === 0 && activeTab !== 'My Posts') {
       return (
         <View style={styles.emptyState}>
-          <Icon name="post-outline" size={50} color={theme.colors.textSecondary + '40'} />
+          <Icon name="post" size={50} color={theme.colors.textSecondary + '40'} />
           <Text style={styles.noContentText}>No {activeTab.toLowerCase()} yet.</Text>
         </View>
       );
@@ -59,7 +82,13 @@ const Profile = () => {
     return items.map((post) => (
       <Pressable key={post.id} style={styles.contentCard}>
         <View style={styles.cardHeader}>
-          <Image source={{ uri: user.avatar }} style={styles.cardAvatar} />
+          {/* <Image source={{ uri: user.avatar }} style={styles.cardAvatar} /> */}
+          <Avatar 
+            uri={user?.image}
+            size={hp(12)}
+            rounded={theme.radius.xxl*1.4}
+            style={styles.cardAvatar}
+          />
           <View>
             <Text style={styles.cardTitle}>{post.user}</Text>
             <Text style={styles.cardSubtitle}>{post.time}</Text>
@@ -77,11 +106,11 @@ const Profile = () => {
 
         <View style={styles.cardFooter}>
           <View style={styles.footerIconText}>
-            <Icon name="heart-outline" size={18} color={theme.colors.textSecondary} />
+            <Icon name="heart" size={18} color={theme.colors.textSecondary} />
             <Text style={styles.footerText}>{post.amens}</Text>
           </View>
           <View style={styles.footerIconText}>
-            <Icon name="comment-text-outline" size={18} color={theme.colors.textSecondary} />
+            <Icon name="comment" size={18} color={theme.colors.textSecondary} />
             <Text style={styles.footerText}>{post.comments}</Text>
           </View>
         </View>
@@ -100,7 +129,7 @@ const Profile = () => {
         title='Profile'
         showBackButton={true}
         renderRight={()=>(
-          <Pressable>
+          <Pressable onPress={handleLogout}>
             <Icon name="logOut" size={24} color='red'/>
           </Pressable>
         )}
@@ -114,7 +143,7 @@ const Profile = () => {
             <View style={styles.avatarWrapper}>
               <Image source={{ uri: user.avatar }} style={styles.profileAvatar} />
               <Pressable style={styles.editAvatarBtn}>
-                <Icon name="camera-outline" size={16} color="white" />
+                <Icon name="camera" size={16} color="white" />
               </Pressable>
             </View>
 

@@ -1,16 +1,23 @@
 import { theme } from '../../constants/theme'
 import BackIcon from './BackIcon'
+import BookmarkIcon from './BookMark'
 import BookIcon from './BookOpen'
+import CameraIcon from './CameraIcon'
+import CommentIcon from './Comment'
 import MailIcon from './Email'
 import HeartIcon from "./Heart"
 import HomeIcon from './HomeIcon'
 import LockIcon from './Lock'
+import LogoutIcon from './LogOut'
+import MoreIcon from './MoreIcon'
 import AddIcon from "./Plus"
+import PostIcon from './PostIcon'
 import SettingsIcon from './Setting'
+import ShareIcon from './ShareIcon'
 import StudyIcon from "./Study"
 import UserIcon from './User'
 import UsersIcon from './Users'
-import LogoutIcon from './LogOut'
+
 
 const icons = {
     home: HomeIcon,
@@ -24,7 +31,13 @@ const icons = {
     setting: SettingsIcon,
     bookOpen:BookIcon,
     users:UsersIcon,
-    logOut:LogoutIcon
+    logOut:LogoutIcon,
+    camera:CameraIcon,
+    post:PostIcon,
+    comment: CommentIcon,
+    more:MoreIcon,
+    share:ShareIcon,
+    bookMark:BookmarkIcon
 
 }
 

@@ -1,6 +1,6 @@
 import { useRouter } from 'expo-router';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
-import Icon from '../assets/icons'; // Ensure this matches your icon library path
+import Icon from '../assets/icons/index'; // Ensure this matches your icon library path
 import { theme } from '../constants/theme';
 import { hp } from '../helpers/common';
 

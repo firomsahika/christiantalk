@@ -1,19 +1,20 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from "../assets/icons/index";
 import { hp } from '../helpers/common';
 
 const DailyScriptureCard = () => (
   <View style={styles.card}>
     <View style={styles.cardHeader}>
       <View style={styles.cardIconBackground}>
-        <Icon name="book-open-variant" size={20} color='#53d22d' />
+        <Icon name="bookOpen" size={20} color='#53d22d' />
       </View>
       <View>
         <Text style={styles.cardTitle}>Daily Scripture</Text>
         <Text style={styles.cardSubtitle}>System • Just now</Text>
       </View>
       <TouchableOpacity style={styles.cardMoreButton}>
-        <Icon name="dots-horizontal" size={24} color="#A6A6A6" />
+        <Icon name="more" size={24} color="#A6A6A6" />
       </TouchableOpacity>
     </View>
     <View style={styles.verseOfTheDayContainer}>
@@ -28,15 +29,15 @@ const DailyScriptureCard = () => (
     </View>
     <View style={styles.cardFooter}>
       <View style={styles.footerIconText}>
-        <Icon name="hands-pray" size={18} color="#A6A6A6" />
+        <Icon name="heart" size={18} color="#A6A6A6" />
         <Text style={styles.footerText}>2.4k Amens</Text>
       </View>
       <View style={styles.footerIconText}>
-        <Icon name="message-reply" size={18} color="#A6A6A6" />
+        <Icon name="comment" size={18} color="#A6A6A6" />
         <Text style={styles.footerText}>45</Text>
       </View>
       <TouchableOpacity style={styles.shareButton}>
-        <Icon name="share-variant" size={18} color="#A6A6A6" />
+        <Icon name="share" size={18} color="#A6A6A6" />
       </TouchableOpacity>
     </View>
   </View>

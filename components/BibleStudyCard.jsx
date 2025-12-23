@@ -1,6 +1,6 @@
-import React from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from "../assets/icons/index";
 
 const BibleStudyCard = () => (
   <View style={styles.card}>
@@ -14,13 +14,13 @@ const BibleStudyCard = () => (
         <Text style={styles.cardSubtitle}>5h ago • Bible Study Group</Text>
       </View>
       <TouchableOpacity style={styles.cardMoreButton}>
-        <Icon name="dots-horizontal" size={24} color="#A6A6A6" />
+        <Icon name="more" size={24} color="#A6A6A6" />
       </TouchableOpacity>
     </View>
     <View style={styles.bibleStudyPostContent}>
       <View style={styles.dashedBorder} />
       <View style={styles.bibleStudyTextContent}>
-        <Text style={styles.questionOfTheWeekTitle}>Question of the Week <Icon name="book-open-variant" size={18} color="#FFFFFF" /></Text>
+        <Text style={styles.questionOfTheWeekTitle}>Question of the Week <Icon name="bookOpen" size={18} color="#FFFFFF" /></Text>
         <Text style={styles.bibleStudyPostText}>
           We are diving into Romans 8 this week. What verse speaks to you the most about God's enduring love?
         </Text>
@@ -32,11 +32,11 @@ const BibleStudyCard = () => (
     </View>
     <View style={styles.cardFooter}>
       <View style={styles.footerIconText}>
-        <Icon name="thumb-up-outline" size={18} color="#A6A6A6" />
+        <Icon name="heart" size={18} color="#A6A6A6" />
         <Text style={styles.footerText}>156</Text>
       </View>
       <View style={styles.footerIconText}>
-        <Icon name="comment-text-outline" size={18} color="#A6A6A6" />
+        <Icon name="comment" size={18} color="#A6A6A6" />
         <Text style={styles.footerText}>89 Comments</Text>
       </View>
     </View>

@@ -1,5 +1,6 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from "../assets/icons/index";
 import { hp } from '../helpers/common';
 
 const UserPostCard = () => (
@@ -30,15 +31,15 @@ const UserPostCard = () => (
     /> */}
     <View style={styles.cardFooter}>
       <View style={styles.footerIconText}>
-        <Icon name="heart-outline" size={18} color="#A6A6A6" />
+        <Icon name="heart" size={18} color="#A6A6A6" />
         <Text style={styles.footerText}>342</Text>
       </View>
       <View style={styles.footerIconText}>
-        <Icon name="comment-text-outline" size={18} color="#A6A6A6" />
+        <Icon name="comment" size={18} color="#A6A6A6" />
         <Text style={styles.footerText}>28</Text>
       </View>
       <TouchableOpacity style={styles.shareButton}>
-        <Icon name="bookmark-outline" size={18} color="#A6A6A6" />
+        <Icon name="bookMark" size={18} color="#A6A6A6" />
       </TouchableOpacity>
     </View>
   </View>
