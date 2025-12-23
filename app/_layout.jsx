@@ -37,8 +37,7 @@ const MainLayout = () => {
 
   const updatedUserData = async (user) =>{
     let res = await getUserData(user?.id);
-
-    if(res.success) setUserData(res.data)
+    if(res.success) setUserData(res.data);
   }
 
 

@@ -2,6 +2,7 @@ import { theme } from '../../constants/theme'
 import BackIcon from './BackIcon'
 import BookmarkIcon from './BookMark'
 import BookIcon from './BookOpen'
+import PhoneIcon from './Call'
 import CameraIcon from './CameraIcon'
 import CommentIcon from './Comment'
 import MailIcon from './Email'
@@ -17,6 +18,7 @@ import ShareIcon from './ShareIcon'
 import StudyIcon from "./Study"
 import UserIcon from './User'
 import UsersIcon from './Users'
+import LocationIcon from './Location'
 
 
 const icons = {
@@ -37,7 +39,10 @@ const icons = {
     comment: CommentIcon,
     more:MoreIcon,
     share:ShareIcon,
-    bookMark:BookmarkIcon
+    bookMark:BookmarkIcon,
+    call: PhoneIcon,
+    location:LocationIcon
+    
 
 }
 

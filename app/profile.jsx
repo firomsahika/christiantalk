@@ -2,14 +2,13 @@ import { useRouter } from 'expo-router';
 import { useState } from 'react';
 import {
   Alert,
-  Image,
   Pressable,
   SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
   Text,
-  View,
+  View
 } from 'react-native';
 // import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from "../assets/icons/index";
@@ -17,12 +16,13 @@ import Avatar from "../components/Avatar";
 import Header from '../components/PagesHeader';
 import { theme } from '../constants/theme';
 import { useAuth } from '../contexts/AuthContext';
-import hp from "../helpers/common";
+import { hp } from "../helpers/common";
 
 const Profile = () => {
   const router = useRouter();
   const [activeTab, setActiveTab] = useState('My Posts');
   const {user, setAuth} = useAuth();
+
 
   const onLogout = async() =>{
     //handle logout
@@ -130,6 +130,7 @@ const Profile = () => {
         showBackButton={true}
         renderRight={()=>(
           <Pressable onPress={handleLogout}>
+
             <Icon name="logOut" size={24} color='red'/>
           </Pressable>
         )}
@@ -141,14 +142,18 @@ const Profile = () => {
           {/* Profile Section */}
           <View style={styles.profileInfo}>
             <View style={styles.avatarWrapper}>
-              <Image source={{ uri: user.avatar }} style={styles.profileAvatar} />
-              <Pressable style={styles.editAvatarBtn}>
-                <Icon name="camera" size={16} color="white" />
-              </Pressable>
+              {/* <Image source={{ uri: user.avatar }} style={styles.profileAvatar} /> */}
+              <Avatar 
+                uri={user?.image}
+                size={hp(20)}
+                rounded={theme.radius.xxl*1.4}
+                style={styles.profileAvatar}
+              />
+              
             </View>
 
-            <Text style={styles.fullName}>{user.fullName}</Text>
-            <Text style={styles.username}>{user.username}</Text>
+            <Text style={styles.fullName}>{user && user.name}</Text>
+            <Text style={styles.username}>{user.email}</Text>
             <Text style={styles.bioText}>{user.bio}</Text>
 
             {/* Stats Row */}
@@ -244,7 +249,16 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: theme.colors.primary,
   },
-  editAvatarBtn: {
+  editAvatarBtn: { editAvatarBtn: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    backgroundColor: theme.colors.primary,
+    padding: 6,
+    borderRadius: 15,
+    borderWidth: 2,
+    borderColor: theme.colors.background,
+  },
     position: 'absolute',
     bottom: 0,
     right: 0,
