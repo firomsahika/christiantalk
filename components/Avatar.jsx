@@ -8,16 +8,21 @@ import { getUserImageSrc } from "../services/imageService";
 
 const Avatar = ({
     uri,
-    size=hp(4.5),
-    rounded=theme.radius.md,
-    style={}
-}) =>{
+    size = hp(4.5),
+    rounded = theme.radius.md,
+    style = {}
+}) => {
+
+    let source = uri && typeof uri === 'object' 
+        ? { uri: uri.uri } 
+        : getUserImageSrc(uri);
+
     return (
-       <Image 
-     source={getUserImageSrc(uri)}
-     transition={100}
-     style={[styles.avatar, {height: size, width:size, borderRadius: rounded}, style]}
-   />
+        <Image
+            source={source}
+            transition={100}
+            style={[styles.avatar, { height: size, width: size, borderRadius: rounded }, style]}
+        />
     )
 }
 
@@ -25,7 +30,7 @@ const Avatar = ({
 export default Avatar;
 
 const styles = StyleSheet.create({
-    avatar:{
+    avatar: {
         borderCurve: 'continuous',
         borderColor: theme.colors.darkLight,
         borderWidth: 1

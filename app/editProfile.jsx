@@ -1,5 +1,7 @@
+import * as ImagePicker from 'expo-image-picker';
 import { useRouter } from 'expo-router';
 import { useEffect, useState } from 'react';
+
 import {
   Alert,
   Pressable,
@@ -17,6 +19,7 @@ import Input from '../components/input';
 import { theme } from '../constants/theme';
 import { useAuth } from '../contexts/AuthContext';
 import { hp } from "../helpers/common";
+import { getUserImageSrc } from '../services/imageService';
 import { updateUser } from '../services/userService';
 
 const EditProfileScreen = () => {
@@ -67,7 +70,7 @@ const handleSave = async () => {
     let { name, phoneNumber, address, image, bio } = userData;
 
     
-    if (!name || !phoneNumber || !address || !bio) {
+    if (!name || !phoneNumber || !address || !bio || !image) {
       console.log('2. Validation Failed - missing fields');
       Alert.alert("Profile", "Please fill all the fields");
       return;
@@ -75,6 +78,10 @@ const handleSave = async () => {
 
     console.log('3. Validation Passed. Data to send:', userData);
     setLoading(true);
+
+    if(typeof image == 'object') {
+      // upload image
+    }
 
     try {
         const res = await updateUser(currentUser?.id, userData);
@@ -92,8 +99,23 @@ const handleSave = async () => {
     }
 }
 
+   const onPickImage = async ()=>{
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing:true,
+        aspect:[4,3],
+        quality:0.7,
+      })
+
+      if(!result.canceled) {
+        setUser({...user, image: result.assets[0]})
+      }
 
 
+   }
+
+
+  let imageSource = user.image && typeof user.image == 'object'? user.image.uri : getUserImageSrc(user.image);
 
 
   return (
@@ -128,7 +150,7 @@ const handleSave = async () => {
                 size={hp(16)}
                 rounded={theme.radius.xxl * 1.4}
               />
-              <Pressable style={styles.editAvatarBtn}>
+              <Pressable onPress={onPickImage} style={styles.editAvatarBtn}>
                 <Icon name="camera" size={20} color="white" strokeWidth={2} />
               </Pressable>
             </View>
