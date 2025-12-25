@@ -1,6 +1,6 @@
+import { decode } from 'base64-arraybuffer';
 import * as FileSystem from 'expo-file-system';
 import { supabase } from '../lib/supabase';
-
 
 
 export const getUserImageSrc = imagePath =>{
@@ -29,14 +29,23 @@ export const uploadFile = async (folderName, fileUri, isImage=true) =>{
         cacheControl: '3600',
         upsert:false,
         contentType: isImage? 'image/*' : 'video/*'
-      })
+      });
+
+      if(error){
+        console.log('FIle upload error  ', error );
+        return {success:false, msg:"could not upload media"}
+      }
+
+      console.log('data:', data);
+      return {success:true, data:data.path}
    } catch (error) {
     console.log('File upload error', error)
 
     return {success:false, msg: "Couldn't upload media"}
    }
+
 }
 
 export const getFilePath = (folderName, isImage)=>{
-    return `/${folderName}/${(new Date()).getTime()}${isImage? '.png':'mp4'}`
+    return `${folderName}/${(new Date()).getTime()}${isImage? '.png':'mp4'}`
 }

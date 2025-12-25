@@ -19,7 +19,7 @@ import Input from '../components/input';
 import { theme } from '../constants/theme';
 import { useAuth } from '../contexts/AuthContext';
 import { hp } from "../helpers/common";
-import { getUserImageSrc } from '../services/imageService';
+import { getUserImageSrc, uploadFile } from '../services/imageService';
 import { updateUser } from '../services/userService';
 
 const EditProfileScreen = () => {
@@ -81,6 +81,9 @@ const handleSave = async () => {
 
     if(typeof image == 'object') {
       // upload image
+      let imageRes = await uploadFile('profiles', image?.uri, true);
+      if(imageRes.success) userData.image = imageRes.data;
+      else userData.image = null;
     }
 
     try {
