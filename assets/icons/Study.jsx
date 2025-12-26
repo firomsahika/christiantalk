@@ -2,7 +2,7 @@ import Svg, { Path } from "react-native-svg";
 
 const StudyIcon = ({
   size = 24,
-  color = "#141B34",
+  color = "white",
   strokeWidth = 1.5,
 }) => {
   return (

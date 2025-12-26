@@ -15,9 +15,9 @@ export default function MainTabsLayout() {
           backgroundColor: '#122019', // Your dark background
           borderTopColor: '#2B3D33',
           borderTopWidth: 1,
-          height: hp(10),
-          paddingBottom: hp(1.5),
-          paddingTop: hp(1),
+          height: 140,
+          paddingBottom: 10,
+          paddingTop: 10,
         },
         tabBarLabelStyle: {
           fontSize: hp(1.4),

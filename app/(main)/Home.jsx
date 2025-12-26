@@ -1,13 +1,14 @@
-import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 
 // Import Components
 import { useRouter } from 'expo-router';
 import BibleStudyCard from '../../components/BibleStudyCard';
-import BottomNavigation from '../../components/BottomNavigation';
 import DailyScriptureCard from '../../components/DailyScriptureCard';
 import Header from '../../components/Header';
+import ScreenWrapper from '../../components/ScreenWrapper';
 import SharePost from '../../components/SharePost';
 import UserPostCard from '../../components/UserPostCard';
+import { theme } from '../../constants/theme';
 import { useAuth } from '../../contexts/AuthContext';
 
 const HomeScreen = () => {
@@ -19,7 +20,8 @@ const HomeScreen = () => {
   }
   
   return (
-    <SafeAreaView style={styles.container}>
+   <ScreenWrapper bg={theme.colors.background}>
+    {/* <SafeAreaView style={styles.container}> */}
       <Header />
       <SharePost />
       
@@ -35,7 +37,8 @@ const HomeScreen = () => {
 
 
       {/* <BottomNavigation /> */}
-    </SafeAreaView>
+    {/* </SafeAreaView> */}
+  </ScreenWrapper>
   );
 };
 
