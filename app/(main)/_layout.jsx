@@ -15,7 +15,7 @@ export default function MainTabsLayout() {
           backgroundColor: '#122019', // Your dark background
           borderTopColor: '#2B3D33',
           borderTopWidth: 1,
-          height: 140,
+          height: 90,
           paddingBottom: 10,
           paddingTop: 10,
         },

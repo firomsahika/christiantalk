@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 import {
   Alert,
   Pressable,
-  SafeAreaView,
   ScrollView,
   StatusBar,
   StyleSheet,
@@ -15,6 +14,7 @@ import {
 import Icon from '../assets/icons/index';
 import Avatar from '../components/Avatar';
 import Header from '../components/PagesHeader';
+import ScreenWrapper from '../components/ScreenWrapper';
 import Input from '../components/input';
 import { theme } from '../constants/theme';
 import { useAuth } from '../contexts/AuthContext';
@@ -63,13 +63,13 @@ const EditProfileScreen = () => {
 
 
 
-const handleSave = async () => {
+  const handleSave = async () => {
     console.log('1. HandleSave Triggered');
-    
+
     let userData = { ...user };
     let { name, phoneNumber, address, image, bio } = userData;
 
-    
+
     if (!name || !phoneNumber || !address || !bio || !image) {
       console.log('2. Validation Failed - missing fields');
       Alert.alert("Profile", "Please fill all the fields");
@@ -79,163 +79,165 @@ const handleSave = async () => {
     console.log('3. Validation Passed. Data to send:', userData);
     setLoading(true);
 
-    if(typeof image == 'object') {
+    if (typeof image == 'object') {
       // upload image
       let imageRes = await uploadFile('profiles', image?.uri, true);
-      if(imageRes.success) userData.image = imageRes.data;
+      if (imageRes.success) userData.image = imageRes.data;
       else userData.image = null;
     }
 
     try {
-        const res = await updateUser(currentUser?.id, userData);
-      
-        if (res.success) {
-            Alert.alert("Profile", "Profile updated successfully! 🎉");
-            router.back();
-        } else {
-            Alert.alert("Error", res.msg || "Could not update profile");
-        }
-    } catch (error) {
-        Alert.alert("Error", "An unexpected error occurred.");
-    } finally {
-        setLoading(false);
-    }
-}
+      const res = await updateUser(currentUser?.id, userData);
 
-   const onPickImage = async ()=>{
-      let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing:true,
-        aspect:[4,3],
-        quality:0.7,
-      })
-
-      if(!result.canceled) {
-        setUser({...user, image: result.assets[0]})
+      if (res.success) {
+        Alert.alert("Profile", "Profile updated successfully! 🎉");
+        router.back();
+      } else {
+        Alert.alert("Error", res.msg || "Could not update profile");
       }
+    } catch (error) {
+      Alert.alert("Error", "An unexpected error occurred.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  const onPickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 0.7,
+    })
+
+    if (!result.canceled) {
+      setUser({ ...user, image: result.assets[0] })
+    }
 
 
-   }
+  }
 
 
-  let imageSource = user.image && typeof user.image == 'object'? user.image.uri : getUserImageSrc(user.image);
+  let imageSource = user.image && typeof user.image == 'object' ? user.image.uri : getUserImageSrc(user.image);
 
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <StatusBar barStyle="dark-content" />
-      <View style={styles.container}>
+  //   <SafeAreaView style={styles.safeArea}>
+  <ScreenWrapper bg={theme.colors.background}>
+    <StatusBar barStyle="dark-content" />
+    <View style={styles.container}>
 
-        {/* Header Component */}
-        <Header
-          title="Edit Profile"
-          showBackButton={true}
-          renderRight={() => (
-            <Pressable onPress={handleSave} disabled={!hasChanges}>
-              <Text style={[
-                styles.saveText,
-                { opacity: hasChanges ? 1 : 0.4 }
-              ]}>Save</Text>
-            </Pressable>
-          )}
-        />
+      {/* Header Component */}
+      <Header
+        title="Edit Profile"
+        showBackButton={true}
+        renderRight={() => (
+          <Pressable onPress={handleSave} disabled={!hasChanges}>
+            <Text style={[
+              styles.saveText,
+              { opacity: hasChanges ? 1 : 0.4 }
+            ]}>Save</Text>
+          </Pressable>
+        )}
+      />
 
-        <ScrollView
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-        >
-          {/* Avatar Section */}
-          <View style={styles.avatarSection}>
-            <View style={styles.avatarWrapper}>
-              <Avatar
-                uri={user.image}
-                size={hp(16)}
-                rounded={theme.radius.xxl * 1.4}
-              />
-              <Pressable onPress={onPickImage} style={styles.editAvatarBtn}>
-                <Icon name="camera" size={20} color="white" strokeWidth={2} />
-              </Pressable>
-            </View>
-          </View>
-
-          <Text style={styles.detailTitle}>Please fill your profile details</Text>
-
-          {/* Form Fields using Reusable Input */}
-          <View style={styles.form}>
-
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Full Name</Text>
-              <Input
-                placeholder="Enter your name"
-                value={user.name}
-                onChangeText={value => setUser({ ...user, name: value })}
-                icon={<Icon name="user" size={20} color={theme.colors.textSecondary} />}
-              />
-            </View>
-
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Phone Number</Text>
-              <Input
-                placeholder="Enter phone number"
-                value={user.phoneNumber}
-                onChangeText={value => setUser({ ...user, phoneNumber: value })}
-                keyboardType="phone-pad"
-                icon={<Icon name="call" size={20} color={theme.colors.textSecondary} />}
-              />
-            </View>
-
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Location</Text>
-              <Input
-                placeholder="Enter your address"
-                value={user.address}
-                onChangeText={value => setUser({ ...user, address: value })}
-                icon={<Icon name="location" size={20} color={theme.colors.textSecondary} />}
-              />
-            </View>
-
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Bio</Text>
-              <Input
-                placeholder="Tell us about yourself"
-                value={user.bio}
-                onChangeText={value => setUser({ ...user, bio: value })}
-                multiline={true}
-                numberOfLines={4}
-                containerStyles={{ alignItems: 'flex-start', paddingTop: 10 }}
-              />
-              <Text style={styles.charCount}>{user.bio.length}/200</Text>
-            </View>
-
-            {/* Read-only Email field */}
-            <View style={styles.inputGroup}>
-              <Text style={styles.label}>Email (Permanent)</Text>
-              <Input
-                value={currentUser?.email}
-                editable={false}
-                containerStyles={styles.disabledInput}
-                icon={<Icon name="email" size={20} color={theme.colors.textSecondary} />}
-              />
-              <Text style={styles.helperText}>Contact support to change email.</Text>
-            </View>
-
-          </View>
-
-          {/* Footer Actions */}
-          <View style={styles.footer}>
-            <Pressable style={styles.passwordBtn}>
-              <Text style={styles.passwordBtnText}>Change Password</Text>
-            </Pressable>
-
-            <Pressable style={styles.deleteBtn}>
-              <Text style={styles.deleteBtnText}>Delete Account</Text>
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+      >
+        {/* Avatar Section */}
+        <View style={styles.avatarSection}>
+          <View style={styles.avatarWrapper}>
+            <Avatar
+              uri={user.image}
+              size={hp(16)}
+              rounded={theme.radius.xxl * 1.4}
+            />
+            <Pressable onPress={onPickImage} style={styles.editAvatarBtn}>
+              <Icon name="camera" size={20} color="white" strokeWidth={2} />
             </Pressable>
           </View>
+        </View>
 
-        </ScrollView>
-      </View>
-    </SafeAreaView>
+        <Text style={styles.detailTitle}>Please fill your profile details</Text>
+
+        {/* Form Fields using Reusable Input */}
+        <View style={styles.form}>
+
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Full Name</Text>
+            <Input
+              placeholder="Enter your name"
+              value={user.name}
+              onChangeText={value => setUser({ ...user, name: value })}
+              icon={<Icon name="user" size={20} color={theme.colors.textSecondary} />}
+            />
+          </View>
+
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Phone Number</Text>
+            <Input
+              placeholder="Enter phone number"
+              value={user.phoneNumber}
+              onChangeText={value => setUser({ ...user, phoneNumber: value })}
+              keyboardType="phone-pad"
+              icon={<Icon name="call" size={20} color={theme.colors.textSecondary} />}
+            />
+          </View>
+
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Location</Text>
+            <Input
+              placeholder="Enter your address"
+              value={user.address}
+              onChangeText={value => setUser({ ...user, address: value })}
+              icon={<Icon name="location" size={20} color={theme.colors.textSecondary} />}
+            />
+          </View>
+
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Bio</Text>
+            <Input
+              placeholder="Tell us about yourself"
+              value={user.bio}
+              onChangeText={value => setUser({ ...user, bio: value })}
+              multiline={true}
+              numberOfLines={4}
+              containerStyles={{ alignItems: 'flex-start', paddingTop: 10 }}
+            />
+            <Text style={styles.charCount}>{user.bio.length}/200</Text>
+          </View>
+
+          {/* Read-only Email field */}
+          <View style={styles.inputGroup}>
+            <Text style={styles.label}>Email (Permanent)</Text>
+            <Input
+              value={currentUser?.email}
+              editable={false}
+              containerStyles={styles.disabledInput}
+              icon={<Icon name="email" size={20} color={theme.colors.textSecondary} />}
+            />
+            <Text style={styles.helperText}>Contact support to change email.</Text>
+          </View>
+
+        </View>
+
+        {/* Footer Actions */}
+        <View style={styles.footer}>
+          <Pressable style={styles.passwordBtn}>
+            <Text style={styles.passwordBtnText}>Change Password</Text>
+          </Pressable>
+
+          <Pressable style={styles.deleteBtn}>
+            <Text style={styles.deleteBtnText}>Delete Account</Text>
+          </Pressable>
+        </View>
+
+      </ScrollView>
+    </View>
+  </ScreenWrapper>
+    // </SafeAreaView>
   );
 };
 
@@ -244,9 +246,12 @@ export default EditProfileScreen;
 const styles = StyleSheet.create({
   safeArea: { flex: 1, backgroundColor: theme.colors.background },
   container: { flex: 1 },
-  scrollContent: { paddingHorizontal: 20, paddingTop: 20, paddingBottom: 50 },
-  avatarSection: { alignItems: 'center', marginVertical: 20 },
-  avatarWrapper: { position: 'relative' },
+  scrollContent: { paddingHorizontal: 20, paddingTop: 10, paddingBottom: 50 },
+  avatarSection: { alignItems: 'center', marginVertical: 16 },
+  avatarWrapper: {
+    position: 'relative',
+    borderRadius: theme.radius.xxl
+  },
   editAvatarBtn: {
     position: 'absolute',
     bottom: 0,

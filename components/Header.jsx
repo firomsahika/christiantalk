@@ -43,11 +43,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     backgroundColor: '#151f11',
+    borderRadius: theme.radius.xl,
   },
   headerTitle: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#FFFFFF',
+    color: theme.colors.textPrimary,
   },
   headerIcons: {
     flexDirection: 'row',

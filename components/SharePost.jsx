@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
   sharePostHeader: {
     flexDirection: 'row',
-    borderBottomColor: '#314037ff',
+    borderBottomColor: 'white',
     borderBottomWidth: 0.2,
     gap: 24,
     alignItems: 'center',
@@ -65,8 +65,8 @@ const styles = StyleSheet.create({
   shareInput: {
     flex: 1,
     color: theme.colors.textSecondary,
-    fontSize: 14,
-    paddingVertical: 8,
+    fontSize: 15,
+    paddingVertical: 2,
     marginBottom: 8,
   },
   shareActions: {
