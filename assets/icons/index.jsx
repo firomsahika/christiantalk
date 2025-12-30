@@ -1,4 +1,5 @@
 import { theme } from '../../constants/theme'
+import ArrowDown from './ArrowDown'
 import ArrowRightIcon from './ArrowRight'
 import BackIcon from './BackIcon'
 import BookmarkIcon from './BookMark'
@@ -18,13 +19,13 @@ import AddIcon from "./Plus"
 import PlusIcon from './PlusOnly'
 import PostIcon from './PostIcon'
 import SearchIcon from './Search'
+import SendIcon from './Send'
 import SettingsIcon from './Setting'
 import ShareIcon from './ShareIcon'
 import StudyIcon from "./Study"
 import UserIcon from './User'
 import UsersIcon from './Users'
 import VideoIcon from './Video'
-import ArrowDown from './ArrowDown'
 
 
 const icons = {
@@ -54,6 +55,7 @@ const icons = {
     video: VideoIcon,
     calendar: CalendarIcon,
     arrowDown: ArrowDown,
+    send: SendIcon
 }
 
 const Icon = ({name, ...props}) => {

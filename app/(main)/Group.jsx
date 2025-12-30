@@ -50,6 +50,10 @@ const Group = () => {
                   type="Online"
                   nextMeeting="Next: Wed @ 7pm"
                   imageUri="https://i.pinimg.com/736x/8c/fc/c0/8cfcc08b4bad9d58f91cd246086628f0.jpg"
+                  onPress={()=> router.push({
+                    pathname: 'groupDetail',
+                    params: { id: 'romans-deep-dive', title:"Romans Deep Dive" }
+                  })}
                 />
                 <ActiveGroupCard
                   title="Psalms for Peace"
@@ -58,6 +62,10 @@ const Group = () => {
                   type="Remote"
                   nextMeeting="3 New Messages"
                   imageUri="https://i.pinimg.com/736x/9c/81/00/9c8100862ba8fbcb3adeec5395466d95.jpg"
+                  onPress={()=> router.push({
+                    pathname: 'groupDetail',
+                    params: { id: 'psalms-for-peace', title:"Psalms for Peace" }
+                  })}
                 />
               </ScrollView>
             </View>
