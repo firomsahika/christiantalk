@@ -24,6 +24,7 @@ import StudyIcon from "./Study"
 import UserIcon from './User'
 import UsersIcon from './Users'
 import VideoIcon from './Video'
+import ArrowDown from './ArrowDown'
 
 
 const icons = {
@@ -52,6 +53,7 @@ const icons = {
     arrowRight: ArrowRightIcon,
     video: VideoIcon,
     calendar: CalendarIcon,
+    arrowDown: ArrowDown,
 }
 
 const Icon = ({name, ...props}) => {
