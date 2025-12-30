@@ -1,9 +1,9 @@
 export const theme = {
     colors: {
         // Core Palette
-        primary: '#53d22d',       // Vibrant Green (for active elements, main buttons, highlights)
+        primary: '#13ec13',       // Vibrant Green (for active elements, main buttons, highlights)
         primaryDark: '#4CAF38',    // A slightly darker shade of primary green, for subtle variations
-        background: '#1C2B24',    // Dark Forest Green (main app background)
+        background: '#102210',   // Dark Forest Green (main app background)
         cardBackground: '#2B3D33', // Slightly Lighter Dark Green (for cards, input fields)
         navBackground: '#122019',  // Even Darker Green (for bottom navigation bar)
 

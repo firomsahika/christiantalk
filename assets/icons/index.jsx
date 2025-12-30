@@ -1,24 +1,29 @@
 import { theme } from '../../constants/theme'
+import ArrowRightIcon from './ArrowRight'
 import BackIcon from './BackIcon'
 import BookmarkIcon from './BookMark'
 import BookIcon from './BookOpen'
+import CalendarIcon from "./Calendar"
 import PhoneIcon from './Call'
 import CameraIcon from './CameraIcon'
 import CommentIcon from './Comment'
 import MailIcon from './Email'
 import HeartIcon from "./Heart"
 import HomeIcon from './HomeIcon'
+import LocationIcon from './Location'
 import LockIcon from './Lock'
 import LogoutIcon from './LogOut'
 import MoreIcon from './MoreIcon'
 import AddIcon from "./Plus"
+import PlusIcon from './PlusOnly'
 import PostIcon from './PostIcon'
+import SearchIcon from './Search'
 import SettingsIcon from './Setting'
 import ShareIcon from './ShareIcon'
 import StudyIcon from "./Study"
 import UserIcon from './User'
 import UsersIcon from './Users'
-import LocationIcon from './Location'
+import VideoIcon from './Video'
 
 
 const icons = {
@@ -41,9 +46,12 @@ const icons = {
     share:ShareIcon,
     bookMark:BookmarkIcon,
     call: PhoneIcon,
-    location:LocationIcon
-    
-
+    location:LocationIcon,
+    plusIcon: PlusIcon,
+    search: SearchIcon,
+    arrowRight: ArrowRightIcon,
+    video: VideoIcon,
+    calendar: CalendarIcon,
 }
 
 const Icon = ({name, ...props}) => {

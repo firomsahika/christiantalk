@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 // import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon from "../assets/icons/index";
+import { theme } from "../constants/theme";
 
 const BottomNavigation = () => (
   <View style={styles.bottomNavigation}>
@@ -50,7 +51,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   createPostFab: {
-    backgroundColor: '#53d22d',
+    backgroundColor: theme.colors.primary,
     width: 56,
     height: 56,
     borderRadius: 28,
