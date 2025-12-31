@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     color: theme.colors.textPrimary,
     fontSize: 20,
-    fontWeight: theme.fontWeights.bold,
+    fontWeight: theme.fonts.bold,
   },
   listContainer: {
     flexDirection: 'column',

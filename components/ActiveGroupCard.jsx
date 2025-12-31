@@ -1,4 +1,4 @@
-import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { ImageBackground, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from '../assets/icons/index';
 import { theme } from '../constants/theme';
 

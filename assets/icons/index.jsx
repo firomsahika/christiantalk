@@ -26,6 +26,7 @@ import StudyIcon from "./Study"
 import UserIcon from './User'
 import UsersIcon from './Users'
 import VideoIcon from './Video'
+import FileIcon from './File'
 
 
 const icons = {
@@ -55,7 +56,8 @@ const icons = {
     video: VideoIcon,
     calendar: CalendarIcon,
     arrowDown: ArrowDown,
-    send: SendIcon
+    send: SendIcon,
+    file: FileIcon
 }
 
 const Icon = ({name, ...props}) => {

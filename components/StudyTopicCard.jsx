@@ -1,6 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient'; // Ensure expo-linear-gradient is installed
-import { Heart, MessageCircle } from 'lucide-react-native';
 import { ImageBackground, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Icon from '../assets/icons/index';
 import { theme } from '../constants/theme';
 
 const StudyTopicCard = ({ tag, title, description, imageUri }) => (
@@ -18,11 +18,11 @@ const StudyTopicCard = ({ tag, title, description, imageUri }) => (
         <Text style={styles.description}>{description}</Text>
         <View style={styles.footer}>
           <TouchableOpacity style={styles.stat}>
-            <Heart size={16} fill={theme.colors.primary} color={theme.colors.primary} />
+            <Icon name="heart" size={16} fill={theme.colors.primary} color={theme.colors.primary} />
             <Text style={styles.statText}>24</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.stat}>
-            <MessageCircle size={16} color="white" />
+            <Icon name="comment" size={16} color="white" />
             <Text style={styles.statText}>12 Comments</Text>
           </TouchableOpacity>
         </View>
@@ -45,12 +45,12 @@ const styles = StyleSheet.create({
     borderWidth: 1, 
     borderColor: 'rgba(19, 236, 19, 0.3)' 
   },
-  badgeText: { color: theme.colors.primary, fontSize: 12, fontWeight: 'bold' },
-  title: { color: 'white', fontSize: 24, fontWeight: 'bold', marginVertical: 8 },
+  badgeText: { color: theme.colors.primary, fontSize: 12, fontWeight: theme.fonts.bold },
+  title: { color: 'white', fontSize: 24, fontWeight: theme.fonts.bold, marginVertical: 8 },
   description: { color: 'rgba(255,255,255,0.9)', fontSize: 14, lineHeight: 20 },
   footer: { flexDirection: 'row', gap: 20, marginTop: 15, borderTopWidth: 1, borderTopColor: 'rgba(255,255,255,0.1)', paddingTop: 15 },
   stat: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  statText: { color: 'white', fontSize: 12, fontWeight: 'bold' },
+  statText: { color: 'white', fontSize: 12, fontWeight: theme.fonts.bold },
 });
 
 export default StudyTopicCard;

@@ -1,5 +1,6 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Icon from "../assets/icons/index";
 import GroupHeader from '../components/GroupHeader';
 import PostCard from '../components/PostCard';
 import StudyTopicCard from '../components/StudyTopicCard';
