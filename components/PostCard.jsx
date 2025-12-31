@@ -35,7 +35,7 @@ const PostCard = ({ user, time, content, userImg, attachedImg, likes, comments }
 
 const styles = StyleSheet.create({
   postContainer: { 
-    backgroundColor: '#122a12', 
+    backgroundColor: theme.colors.navBackground, 
     borderRadius: 16, 
     padding: 16, 
     marginBottom: 16, 

@@ -32,13 +32,18 @@ const StudyTopicCard = ({ tag, title, description, imageUri }) => (
 );
 
 const styles = StyleSheet.create({
-  card: { height: 320, borderRadius: 24, overflow: 'hidden', marginBottom: 20 },
+  card: { 
+    height: 320,
+     borderRadius: 24,
+      overflow: 'hidden', 
+      marginBottom: 20, 
+      backgroundColor: theme.colors.navBackground },
   image: { flex: 1, justifyContent: 'flex-end' },
   gradient: { ...StyleSheet.absoluteFillObject },
   content: { padding: 20 },
   badge: { 
     alignSelf: 'flex-start', 
-    backgroundColor: 'rgba(19, 236, 19, 0.2)', 
+    backgroundColor: theme.colors.navBackground, 
     paddingHorizontal: 12, 
     paddingVertical: 4, 
     borderRadius: 20, 

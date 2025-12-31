@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 12,
-    height: 50, // Standard header height
+    height: 40, // Standard header height
     marginTop: 1,
   },
   leftContainer: {

@@ -9,6 +9,7 @@ import PhoneIcon from './Call'
 import CameraIcon from './CameraIcon'
 import CommentIcon from './Comment'
 import MailIcon from './Email'
+import FileIcon from './File'
 import HeartIcon from "./Heart"
 import HomeIcon from './HomeIcon'
 import LocationIcon from './Location'
@@ -18,6 +19,7 @@ import MoreIcon from './MoreIcon'
 import AddIcon from "./Plus"
 import PlusIcon from './PlusOnly'
 import PostIcon from './PostIcon'
+import QuestionIcon from './Question'
 import SearchIcon from './Search'
 import SendIcon from './Send'
 import SettingsIcon from './Setting'
@@ -26,7 +28,6 @@ import StudyIcon from "./Study"
 import UserIcon from './User'
 import UsersIcon from './Users'
 import VideoIcon from './Video'
-import FileIcon from './File'
 
 
 const icons = {
@@ -57,7 +58,8 @@ const icons = {
     calendar: CalendarIcon,
     arrowDown: ArrowDown,
     send: SendIcon,
-    file: FileIcon
+    file: FileIcon,
+    question: QuestionIcon,
 }
 
 const Icon = ({name, ...props}) => {

@@ -1,24 +1,20 @@
-import React from 'react';
 import {
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-  TouchableOpacity,
-  ImageBackground,
-  SafeAreaView,
+    ImageBackground,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
 } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; // Or your preferred icon library
-import ScreenWrapper from './ScreenWrapper';
-import {theme} from '../constants/theme';
 import Icon from '../assets/icons/index';
+import { theme } from "../constants/theme";
+import ScreenWrapper from './ScreenWrapper';
 
 
 const PlanTab = () => {
   return (
     <ScreenWrapper style={styles.container}>
-      {/* Header & Tabs logic would usually sit in a Parent, 
-          but here is the content for the "Plan" section */}
+   
       
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
         
@@ -57,11 +53,11 @@ const PlanTab = () => {
 
             <View style={styles.resourceRow}>
               <TouchableOpacity style={styles.resourceItem}>
-                <Icon name="help-circle-outline" size={16} color={THEME.primary} />
+                <Icon name="question" size={16} color={theme.colors.primary} />
                 <Text style={styles.resourceText}>3 Questions</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.resourceItem}>
-                <Icon name="file" size={16} color={THEME.primary} />
+                <Icon name="file" size={16} color={theme.colors.primary} />
                 <Text style={styles.resourceText}>Study Guide</Text>
               </TouchableOpacity>
             </View>
@@ -76,7 +72,7 @@ const PlanTab = () => {
 
         {/* Section: Upcoming */}
         <View style={[styles.sectionHeader, { marginTop: 24 }]}>
-          <Icon name="calendar-clock" size={20} color={THEME.textSecondary} />
+          <Icon name="calendar" size={20} color={theme.colors.textSecondary} />
           <Text style={styles.sectionTitle}>Upcoming</Text>
         </View>
 
@@ -93,16 +89,16 @@ const PlanTab = () => {
           title="The Parables" 
           date="Nov 8 • 7:00 PM" 
           reading="Mark 4" 
-          image="https://images.unsplash.com/photo-1441333346627-031b59c112b6?q=80&w=200"
+          image="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=200"
         />
 
         {/* Past Studies Accordion */}
         <TouchableOpacity style={styles.accordionButton}>
           <View style={styles.accordionLeft}>
-            <MaterialCommunityIcons name="history" size={22} color={THEME.textSecondary} />
+            <Icon name="file" size={22} color={theme.colors.textSecondary} />
             <Text style={styles.accordionText}>View Past Studies (3)</Text>
           </View>
-          <MaterialCommunityIcons name="chevron-down" size={24} color={THEME.textSecondary} />
+          <Icon name="arrowDown" size={24} color={theme.colors.textSecondary} />
         </TouchableOpacity>
 
         <View style={{ height: 100 }} />
@@ -110,7 +106,7 @@ const PlanTab = () => {
 
       {/* Floating Action Button */}
       <TouchableOpacity style={styles.fab}>
-        <MaterialCommunityIcons name="plus" size={32} color="black" />
+        <Icon name="plusIcon" size={32} color="black" />
       </TouchableOpacity>
     </ScreenWrapper>
   );
@@ -123,22 +119,22 @@ const UpcomingItem = ({ week, title, date, reading, image }) => (
       <Text style={styles.weekLabel}>{week}</Text>
       <Text style={styles.upcomingTitle} numberOfLines={1}>{title}</Text>
       <View style={styles.miniInfoRow}>
-         <MaterialCommunityIcons name="calendar" size={14} color={THEME.textSecondary} />
+         <Icon name="calendar" size={14} color={theme.colors.textSecondary} />
          <Text style={styles.miniInfoText}>{date}</Text>
       </View>
       <View style={styles.miniInfoRow}>
-         <MaterialCommunityIcons name="book-variant" size={14} color={THEME.textSecondary} />
+         <Icon name="bookOpen" size={14} color={theme.colors.textSecondary} />
          <Text style={styles.miniInfoText}>{reading}</Text>
       </View>
     </View>
-    <MaterialCommunityIcons name="chevron-right" size={24} color={THEME.textSecondary + '80'} />
+    <Icon name="arrowRight" size={24} color={theme.colors.textSecondary + '80'} />
   </TouchableOpacity>
 );
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: THEME.backgroundDark,
+    backgroundColor: theme.colors.navBackground,
   },
   scrollContent: {
     padding: 16,
@@ -155,7 +151,7 @@ const styles = StyleSheet.create({
     marginLeft: 8,
   },
   heroCard: {
-    backgroundColor: THEME.surfaceDark,
+    backgroundColor: theme.colors.navBackground,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: 'rgba(19, 236, 19, 0.1)',
@@ -185,7 +181,7 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255,255,255,0.1)',
   },
   activeBadgeText: {
-    color: THEME.primary,
+    color: theme.colors.primary,
     fontSize: 10,
     fontWeight: 'bold',
   },
@@ -194,7 +190,7 @@ const styles = StyleSheet.create({
     paddingTop: 8,
   },
   weekLabel: {
-    color: THEME.textSecondary,
+    color: theme.colors.textSecondary,
     fontSize: 12,
     fontWeight: '600',
     textTransform: 'uppercase',
@@ -212,7 +208,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   infoText: {
-    color: THEME.textSecondary,
+    color: theme.colors.textSecondary,
     fontSize: 14,
     marginLeft: 8,
   },
@@ -226,7 +222,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   resourceText: {
-    color: THEME.primary,
+    color: theme.colors.primary,
     fontSize: 12,
     marginLeft: 4,
     textDecorationLine: 'underline',
@@ -239,20 +235,20 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   viewButton: {
-    backgroundColor: THEME.primary,
+    backgroundColor: theme.colors.primary,
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 8,
   },
   viewButtonText: {
-    color: THEME.backgroundDark,
+    color: theme.colors.navBackground,
     fontWeight: 'bold',
     fontSize: 14,
   },
   upcomingCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: THEME.surfaceDark,
+    backgroundColor: theme.colors.navBackground,
     borderRadius: 12,
     padding: 12,
     marginBottom: 12,
@@ -276,7 +272,7 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   miniInfoText: {
-    color: THEME.textSecondary,
+    color: theme.colors.textSecondary,
     fontSize: 12,
     marginLeft: 4,
   },
@@ -284,7 +280,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: THEME.surfaceDark,
+    backgroundColor: theme.colors.navBackground,
     padding: 16,
     borderRadius: 12,
     marginTop: 8,
@@ -294,7 +290,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   accordionText: {
-    color: THEME.textSecondary,
+    color: theme.colors.textSecondary,
     fontWeight: '500',
     marginLeft: 12,
   },
@@ -305,11 +301,11 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: THEME.primary,
+    backgroundColor: theme.colors.primary,
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 8,
-    shadowColor: THEME.primary,
+    shadowColor: theme.colors.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.4,
     shadowRadius: 12,
