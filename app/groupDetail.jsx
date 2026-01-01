@@ -1,6 +1,16 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useRef, useState } from "react";
+import {
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View
+} from 'react-native';
 import Icon from "../assets/icons/index";
 import GroupHeader from '../components/GroupHeader';
 import MembersTab from "../components/MembersTab";
@@ -11,81 +21,141 @@ import { theme } from '../constants/theme';
 
 const GroupDetailScreen = () => {
   const router = useRouter();
-  const { id, title } = useLocalSearchParams()
+  const { id, title } = useLocalSearchParams();
+  const inputRef = useRef(null);
+  
   const [activeTab, setActiveTab] = useState("Discussion");
+  const [replyingTo, setReplyingTo] = useState(null);
+  const [inputText, setInputText] = useState("");
+
+  // Discussion Data State
+  const [posts, setPosts] = useState([
+    {
+      id: '1',
+      user: "Sarah J.",
+      content: "This verse really spoke to me today. Reminder is exactly what I needed.",
+      time: "2h ago",
+      userImg: "https://lh3.googleusercontent.com/aida-public/AB6AXuCPbr5-dTGZpABJqOlaC8bvUdOQaGAnh0QRCXcAkfkQJ_xNpcs5hyym496Vso1_bNozCRs_EXhr3zycpZA7lLdo-nhBl5ZHqEFN8l8y9PAhVlTVNSMXHP3obticgmThmbrSdlEtX0cife2X1yHujP9JOl3DSIy5OhSj48DxHYyW1HMJ53rd4TPETnOccMIXYjxf9rC31ojjR3TvnMYRVvp_MTE5ibEMNGimmZPYdKTGShDABmD2MCzsKvaBZQd3qNiynIQ0reZUeek",
+      likes: 8,
+      replies: [
+        {
+          id: '1-1',
+          user: "Michael R.",
+          content: "Me too! Romans 8 is powerful.",
+          time: "1h ago",
+          userImg: "https://lh3.googleusercontent.com/aida-public/AB6AXuCcigrmR9ik0Ktqy2b4VpwXP0WcRIh8CDCOoSICFnxXqhnagd-dIn53lxRNqFIwxh-Imyd6LMPg9h-XxtUIS-iSu09AORtAkWSqSfTqKhVwRT_DLtGkFk1hLr3Z0AZ4l56hcv-e8KmXghtozbuo47scBUGyIgMYRtLM6avYCSnXkp4cHHxDaicmo1_3CFuTkWftExOxQQ2cbLgOM5dclic2IAQOxPZ-kflzc90DNqsBGHLDe84oFmAbvw9eAROympYsB2zb8PVxWJU",
+          likes: 2,
+        }, 
+        {
+          id: '1-1',
+          user: "Michael R.",
+          content: "Me too! Romans 8 is powerful.his verse really spoke to me today. Reminder is exactly what I needed.",
+          time: "1h ago",
+          userImg: "https://lh3.googleusercontent.com/aida-public/AB6AXuCcigrmR9ik0Ktqy2b4VpwXP0WcRIh8CDCOoSICFnxXqhnagd-dIn53lxRNqFIwxh-Imyd6LMPg9h-XxtUIS-iSu09AORtAkWSqSfTqKhVwRT_DLtGkFk1hLr3Z0AZ4l56hcv-e8KmXghtozbuo47scBUGyIgMYRtLM6avYCSnXkp4cHHxDaicmo1_3CFuTkWftExOxQQ2cbLgOM5dclic2IAQOxPZ-kflzc90DNqsBGHLDe84oFmAbvw9eAROympYsB2zb8PVxWJU",
+          likes: 2,
+        }
+      ]
+    },
+    {
+      id: '2',
+      user: "Firomsa J.",
+      content: "The grace of God is truly sufficient.",
+      time: "1day ago",
+      userImg: "https://lh3.googleusercontent.com/aida-public/AB6AXuCPbr5-dTGZpABJqOlaC8bvUdOQaGAnh0QRCXcAkfkQJ_xNpcs5hyym496Vso1_bNozCRs_EXhr3zycpZA7lLdo-nhBl5ZHqEFN8l8y9PAhVlTVNSMXHP3obticgmThmbrSdlEtX0cife2X1yHujP9JOl3DSIy5OhSj48DxHYyW1HMJ53rd4TPETnOccMIXYjxf9rC31ojjR3TvnMYRVvp_MTE5ibEMNGimmZPYdKTGShDABmD2MCzsKvaBZQd3qNiynIQ0reZUeek",
+      likes: 20,
+      replies: []
+    }
+  ]);
+
+  const handleSend = () => {
+    if (!inputText.trim()) return;
+
+    if (replyingTo) {
+      const updatedPosts = posts.map(post => {
+        if (post.id === replyingTo.id) {
+          return {
+            ...post,
+            replies: [...post.replies, {
+              id: Date.now().toString(),
+              user: "David Kim (You)",
+              content: inputText,
+              time: "Just now",
+              userImg: "https://lh3.googleusercontent.com/aida-public/AB6AXuBFxeG_ouOToXjwT1ynMQuRZG0ZbYR2yvIEKbvQ9qWpbMHd2o4l_QpFQlPhAdZZlaiiwwyXssOuFpTMD0Lr-TZi8_pvSPRdokACX4pCpOJ3KfG2sU5-RTLaXJz4CLkVswThkbmybS2FCp4I3k0BeAWkflUYOWICLw3zHq3X5f11OS2r2PLLQu7X8-SsTYu3OLy9jGwfMt2gPVEbHXZ24fKT__Y-m7ah1YjzyF-lHo8gJCB2QBMVEuE98yc22dQUzFNgzZSw2vqEsu0",
+              likes: 0
+            }]
+          };
+        }
+        return post;
+      });
+      setPosts(updatedPosts);
+    } else {
+      const newPost = {
+        id: Date.now().toString(),
+        user: "David Kim (You)",
+        content: inputText,
+        time: "Just now",
+        userImg: "https://lh3.googleusercontent.com/aida-public/AB6AXuBFxeG_ouOToXjwT1ynMQuRZG0ZbYR2yvIEKbvQ9qWpbMHd2o4l_QpFQlPhAdZZlaiiwwyXssOuFpTMD0Lr-TZi8_pvSPRdokACX4pCpOJ3KfG2sU5-RTLaXJz4CLkVswThkbmybS2FCp4I3k0BeAWkflUYOWICLw3zHq3X5f11OS2r2PLLQu7X8-SsTYu3OLy9jGwfMt2gPVEbHXZ24fKT__Y-m7ah1YjzyF-lHo8gJCB2QBMVEuE98yc22dQUzFNgzZSw2vqEsu0",
+        likes: 0,
+        replies: []
+      };
+      setPosts([newPost, ...posts]);
+    }
+    setInputText("");
+    setReplyingTo(null);
+  };
+
+  const renderDiscussion = () => (
+    <View style={styles.feed}>
+      <StudyTopicCard
+        tag="Week 2 Focus"
+        title="No Condemnation"
+        description="Read Romans 8:1-4. Question: 1. How does knowing there is 'no condemnation' change your walk?"
+        imageUri="https://lh3.googleusercontent.com/aida-public/AB6AXuAWDkBqFZfvHjZ11ghsqeID7I0zPmfLgtx8eSpr6Ic3SxLfflUirlHjcOo02rFXRIK2if20R5H_xT-ByAWKMVybCASHTSlPu6EvirAsefXAomYYe8vAnFhR8LnErUuGuRFpiUDWzMOE19G63XVaAEbteZWSXfZL23EvXVShy_OPYNKgbnD7s7WQuOZw1zVFiUjGkOczcqtyi6WLY3HMovoiIEiwuuXPIj1tVqRlIKeohSosAd3SoRpyEQsR2BO5JTlRozsRNxlwVqs"
+      />
+      
+      {posts.map((post) => (
+        <View key={post.id}>
+          <PostCard
+            {...post}
+            comments="Reply"
+            onReply={() => {
+              setReplyingTo(post);
+              inputRef.current?.focus();
+            }}
+          />
+          {post.replies.map((reply) => (
+            <View key={reply.id} style={styles.replyIndentation}>
+              <PostCard
+                {...reply}
+                comments="Reply"
+                isReply={true}
+                onReply={() => {
+                  setReplyingTo(post); 
+                  inputRef.current?.focus();
+                }}
+              />
+            </View>
+          ))}
+        </View>
+      ))}
+      <View style={{ height: 120 }} />
+    </View>
+  );
 
   const renderContent = () => {
     switch (activeTab) {
-      case 'Discussion':
-        return (
-          <>
-            <View style={styles.feed}>
-              <StudyTopicCard
-                tag="Week 2 Focus"
-                title="No Condemnation"
-                description="Read Romans 8:1-4.Question: 1. How does knowing there is 'no condemnation' change your walk?"
-                imageUri="https://lh3.googleusercontent.com/aida-public/AB6AXuAWDkBqFZfvHjZ11ghsqeID7I0zPmfLgtx8eSpr6Ic3SxLfflUirlHjcOo02rFXRIK2if20R5H_xT-ByAWKMVybCASHTSlPu6EvirAsefXAomYYe8vAnFhR8LnErUuGuRFpiUDWzMOE19G63XVaAEbteZWSXfZL23EvXVShy_OPYNKgbnD7s7WQuOZw1zVFiUjGkOczcqtyi6WLY3HMovoiIEiwuuXPIj1tVqRlIKeohSosAd3SoRpyEQsR2BO5JTlRozsRNxlwVqs"
-              />
-              <PostCard
-                user="Sarah J."
-                time="2h ago"
-                content="This verse really spoke to me today. Reminder is exactly what I needed."
-                userImg="https://lh3.googleusercontent.com/aida-public/AB6AXuCPbr5-dTGZpABJqOlaC8bvUdOQaGAnh0QRCXcAkfkQJ_xNpcs5hyym496Vso1_bNozCRs_EXhr3zycpZA7lLdo-nhBl5ZHqEFN8l8y9PAhVlTVNSMXHP3obticgmThmbrSdlEtX0cife2X1yHujP9JOl3DSIy5OhSj48DxHYyW1HMJ53rd4TPETnOccMIXYjxf9rC31ojjR3TvnMYRVvp_MTE5ibEMNGimmZPYdKTGShDABmD2MCzsKvaBZQd3qNiynIQ0reZUeek"
-                likes="8"
-                comments="Reply"
-              />
-               <PostCard
-                user="Firomsa J."
-                time="1day ago"
-                content="This verse really spoke to me today. Reminder is exactly what I needed."
-                userImg="https://lh3.googleusercontent.com/aida-public/AB6AXuCPbr5-dTGZpABJqOlaC8bvUdOQaGAnh0QRCXcAkfkQJ_xNpcs5hyym496Vso1_bNozCRs_EXhr3zycpZA7lLdo-nhBl5ZHqEFN8l8y9PAhVlTVNSMXHP3obticgmThmbrSdlEtX0cife2X1yHujP9JOl3DSIy5OhSj48DxHYyW1HMJ53rd4TPETnOccMIXYjxf9rC31ojjR3TvnMYRVvp_MTE5ibEMNGimmZPYdKTGShDABmD2MCzsKvaBZQd3qNiynIQ0reZUeek"
-                likes="20"
-                comments="Reply"
-              />
-
-              {/* Stick input */}
-              <View style={styles.inputContainer}>
-                <TouchableOpacity style={styles.iconCircle}>
-                  <Icon name="camera" size={22} color="#B0B0B0" />
-                </TouchableOpacity>
-                <View style={styles.textInputWrapper}>
-                  <TextInput
-                    placeholder="Post a message..."
-                    placeholderTextColor="#666"
-                    style={styles.input}
-                  />
-                  <Icon name="bookOpen" size={20} color="#B0B0B0" />
-                </View>
-                <TouchableOpacity style={styles.sendBtn}>
-                  <Icon name="send" size={18} color="#0a1f0a" /></TouchableOpacity>
-              </View>
-            </View>
-          </>
-        );
-      case 'Plan':
-        return (
-          <PlanTab />
-        );
-      case 'Members':
-        return (
-          <MembersTab />
-        );
-      default:
-        return null;
-
+      case 'Discussion': return renderDiscussion();
+      case 'Plan': return <PlanTab />;
+      case 'Members': return <MembersTab />;
+      default: return null;
     }
   };
 
-
-
   return (
     <View style={styles.container}>
-      <GroupHeader
-        title={title}
-        onBack={() => router.back()}
-      />
+      <GroupHeader title={title} onBack={() => router.back()} />
 
-      <ScrollView stickyHeaderIndices={[2]} showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{ flex: 1 }}>
         {/* Profile Info Section */}
         <View style={styles.infoSection}>
           <View style={styles.avatarWrapper}>
@@ -95,20 +165,20 @@ const GroupDetailScreen = () => {
             />
             <View style={styles.statusDot} />
           </View>
-          <View style={styles.infoTextWrapper}>
+          <div style={styles.infoTextWrapper}>
             <View style={styles.activeStudyBadge}>
               <View style={styles.pulseDot} />
               <Text style={styles.activeText}>Active Study</Text>
             </View>
             <Text style={styles.memberSub}>12 Members • Daily</Text>
-          </View>
+          </div>
           <TouchableOpacity style={styles.inviteBtn}>
             <Icon name="user" size={18} color="#0a1f0a" />
             <Text style={styles.inviteText}>Invite</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Tab Bar (simplified as seen in previous logic) */}
+        {/* Tab Bar */}
         <View style={styles.tabsContainer}>
           <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingHorizontal: 20 }}>
             {["Discussion", "Plan", "Members"].map((tab) => (
@@ -120,21 +190,52 @@ const GroupDetailScreen = () => {
                 <Text style={activeTab === tab ? styles.activeTabText : styles.inactiveTabText}>
                   {tab}
                 </Text>
-                {/* Red dot for Invites tab as seen in your HTML */}
-                {tab === "Invites" && <View style={styles.redDot} />}
               </TouchableOpacity>
             ))}
           </ScrollView>
         </View>
 
-        {/* rendering dynamic content */}
-
         {renderContent()}
-
       </ScrollView>
 
-      {/* Sticky Input Bar */}
+      {/* FIXED INPUT BAR */}
+      {activeTab === "Discussion" && (
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
+        >
+          {replyingTo && (
+            <View style={styles.replyIndicator}>
+              <Text style={styles.replyText}>
+                Replying to <Text style={{fontWeight: 'bold', color: 'white'}}>{replyingTo.user}</Text>
+              </Text>
+              <TouchableOpacity onPress={() => setReplyingTo(null)}>
+                <Icon name="more" size={16} color="#B0B0B0" />
+              </TouchableOpacity>
+            </View>
+          )}
 
+          <View style={styles.fixedInputContainer}>
+            <TouchableOpacity style={styles.iconCircle}>
+              <Icon name="camera" size={22} color="#B0B0B0" />
+            </TouchableOpacity>
+            <View style={styles.textInputWrapper}>
+              <TextInput
+                ref={inputRef}
+                value={inputText}
+                onChangeText={setInputText}
+                placeholder={replyingTo ? "Write a reply..." : "Post a message..."}
+                placeholderTextColor="#666"
+                style={styles.input}
+              />
+              <Icon name="bookOpen" size={20} color="#B0B0B0" />
+            </View>
+            <TouchableOpacity style={styles.sendBtn} onPress={handleSend}>
+              <Icon name="send" size={18} color="#0a1f0a" />
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      )}
     </View>
   );
 };
@@ -152,29 +253,42 @@ const styles = StyleSheet.create({
   memberSub: { color: '#B0B0B0', fontSize: 14, marginTop: 4 },
   inviteBtn: { backgroundColor: theme.colors.primary, flexDirection: 'row', width: 200, height: 44, borderRadius: 22, justifyContent: 'center', alignItems: 'center', gap: 8 },
   inviteText: { color: '#0a1f0a', fontWeight: 'bold', fontSize: 14 },
-  tabContainer: { flexDirection: 'row', paddingHorizontal: 16, borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.05)', backgroundColor: '#0a1f0a' },
+  tabsContainer: { borderBottomWidth: 1, borderBottomColor: 'rgba(255,255,255,0.05)' },
   activeTab: { borderBottomWidth: 3, borderBottomColor: theme.colors.primary, paddingVertical: 12, marginRight: 32 },
   inactiveTab: { paddingVertical: 12, marginRight: 32 },
   activeTabText: { color: theme.colors.primary, fontWeight: 'bold' },
   inactiveTabText: { color: '#B0B0B0', fontWeight: 'bold' },
-  feed: { padding: 16, paddingBottom: 100 },
-  inputContainer: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
+  feed: { padding: 16 },
+  
+  // Nested Reply UI
+  replyIndentation: {
+    marginLeft: 30,
+    borderLeftWidth: 1,
+    borderLeftColor: theme.colors.primary,
+    paddingLeft: 10,
+    marginBottom: 5,
+  },
+  replyIndicator: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     backgroundColor: theme.colors.navBackground,
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderWidth: 4,
+    borderColor: theme.colors.primary,
+  },
+  replyText: { color: '#B0B0B0', fontSize: 12 },
+  fixedInputContainer: {
+    padding: 12,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
-    borderTopWidth: 1,
-    borderTopColor: 'rgba(255,255,255,0.05)'
+    backgroundColor: '#0a1f0a',
   },
   iconCircle: { width: 40, height: 40, borderRadius: 20, backgroundColor: 'rgba(255,255,255,0.05)', justifyContent: 'center', alignItems: 'center' },
-  textInputWrapper: { flex: 1, backgroundColor: theme.colors.navBackground, borderRadius: 24, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 44, borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)' },
+  textInputWrapper: { flex: 1, backgroundColor: 'rgba(255,255,255,0.05)', borderRadius: 24, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, height: 44, borderWidth: 1, borderColor: 'rgba(255,255,255,0.1)' },
   input: { flex: 1, color: 'white', fontSize: 14 },
-  sendBtn: { width: 44, height: 44, borderRadius: 22, backgroundColor: theme.colors.primary, justifyContent: 'center', alignItems: 'center', shadowColor: theme.colors.primary, shadowRadius: 10, shadowOpacity: 0.3 }
+  sendBtn: { width: 44, height: 44, borderRadius: 22, backgroundColor: theme.colors.primary, justifyContent: 'center', alignItems: 'center' }
 });
 
-export default GroupDetailScreen;
+export default GroupDetailScreen; 

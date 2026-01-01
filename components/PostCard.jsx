@@ -2,30 +2,28 @@ import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Icon from "../assets/icons/index";
 import { theme } from '../constants/theme';
 
-const PostCard = ({ user, time, content, userImg, attachedImg, likes, comments }) => (
-  <View style={styles.postContainer}>
+const PostCard = ({ user, time, content, userImg, likes, comments, onReply, isReply }) => (
+  <View style={[styles.postContainer, isReply && styles.replyContainer]}>
     <View style={styles.row}>
-      <Image source={{ uri: userImg }} style={styles.avatar} />
+      <Image source={{ uri: userImg }} style={[styles.avatar, isReply && styles.replyAvatar]} />
       <View style={styles.mainContent}>
         <View style={styles.postHeader}>
           <View>
-            <Text style={styles.userName}>{user}</Text>
+            <Text style={[styles.userName, isReply && styles.replyUserName]}>{user}</Text>
             <Text style={styles.timeText}>{time}</Text>
           </View>
-          <TouchableOpacity>
-            <Icon name="more" size={20} color="#B0B0B0" />
-            </TouchableOpacity>
         </View>
+        
         <Text style={styles.text}>{content}</Text>
-        {attachedImg && <Image source={{ uri: attachedImg }} style={styles.attachedImg} />}
+        
         <View style={styles.actions}>
           <TouchableOpacity style={styles.actionBtn}>
-            <Icon name="heart" size={18} color={theme.colors.primary} />
-            <Text style={styles.primaryActionText}>Amen ({likes})</Text>
+            <Icon name="heart" size={14} color={theme.colors.primary} />
+            <Text style={styles.actionText}>{likes}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionBtn}>
-            <Icon name="comment" size={18} color="#B0B0B0" />
-            <Text style={styles.secondaryActionText}>{comments}</Text>
+          
+          <TouchableOpacity style={styles.actionBtn} onPress={onReply}>
+            <Text style={styles.actionText}>{comments}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -34,26 +32,20 @@ const PostCard = ({ user, time, content, userImg, attachedImg, likes, comments }
 );
 
 const styles = StyleSheet.create({
-  postContainer: { 
-    backgroundColor: theme.colors.navBackground, 
-    borderRadius: 16, 
-    padding: 16, 
-    marginBottom: 16, 
-    borderWidth: 1, 
-    borderColor: 'rgba(255,255,255,0.05)' 
-  },
-  row: { flexDirection: 'row', gap: 12 },
-  avatar: { width: 40, height: 40, borderRadius: 20 },
+  postContainer: { backgroundColor: theme.colors.navBackground, borderRadius: 16, padding: 12, marginBottom: 10 },
+  replyContainer: { backgroundColor: 'transparent', paddingHorizontal: 0, marginBottom: 12 },
+  row: { flexDirection: 'row', gap: 10 },
+  avatar: { width: 36, height: 36, borderRadius: 18 },
+  replyAvatar: { width: 28, height: 28, borderRadius: 14 },
   mainContent: { flex: 1 },
-  postHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 },
-  userName: { color: 'white', fontWeight: 'bold', fontSize: 14 },
-  timeText: { color: '#B0B0B0', fontSize: 12 },
-  text: { color: '#E0E0E0', fontSize: 14, lineHeight: 20, marginTop: 4 },
-  attachedImg: { width: '100%', height: 200, borderRadius: 12, marginTop: 12 },
-  actions: { flexDirection: 'row', gap: 24, marginTop: 16 },
-  actionBtn: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  primaryActionText: { color: theme.colors.primary, fontSize: 12, fontWeight: 'bold' },
-  secondaryActionText: { color: '#B0B0B0', fontSize: 12, fontWeight: 'bold' },
+  postHeader: { flexDirection: 'row', justifyContent: 'space-between' },
+  userName: { color: 'white', fontWeight: 'bold', fontSize: 13 },
+  replyUserName: { fontSize: 12 },
+  timeText: { color: '#666', fontSize: 10 },
+  text: { color: '#E0E0E0', fontSize: 13, marginTop: 4 },
+  actions: { flexDirection: 'row', gap: 20, marginTop: 8 },
+  actionBtn: { flexDirection: 'row', alignItems: 'center', gap: 4 },
+  actionText: { color: '#B0B0B0', fontSize: 11, fontWeight: 'bold' },
 });
 
 export default PostCard;
